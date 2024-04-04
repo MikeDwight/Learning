@@ -13,7 +13,7 @@ const { Schema } = mongoose;
 const personSchema = new Schema({
   name: {
     type: String,
-    required: true, // "required" instead of "require"
+    required: true,
   },
   age: Number,
   favoriteFoods: [String],
@@ -22,29 +22,96 @@ const personSchema = new Schema({
 Person = mongoose.model("Person", personSchema);
 
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const MikeAlvs = new Person({
+    name: "Mike",
+    age: 33,
+    favoriteFoods: ["Fruits", "Chocolate", "Sushi"],
+  });
+
+  MikeAlvs.save(function (err, data) {
+    if (err) return console.error(err);
+    done(null, data);
+  });
 };
+
+const arrayOfPeople = [
+  {
+    name: "Mike",
+    age: 33,
+    favoriteFoods: ["Fruits", "Chocolate", "Sushi"],
+  },
+  {
+    name: "Prissy",
+    age: 33,
+    favoriteFoods: ["Sushi", "Pizza", "Mozzarella"],
+  },
+];
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, function (err, data) {
+    if (err) return console.error(err);
+    done(null, data);
+  });
 };
+
+const personName = "Mike";
 
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+  Person.find(
+    {
+      name: personName,
+    },
+    function (err, data) {
+      if (err) return console.error(err);
+      done(null, data);
+    }
+  );
 };
+
+const food = "Sushi";
 
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne(
+    {
+      favoriteFoods: food,
+    },
+    function (err, data) {
+      if (err) return console.error(err);
+      done(null, data);
+    }
+  );
 };
 
+const personId = "660e3ff39c384f60cd612d3a";
+
 const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findById(
+    {
+      _id: personId,
+    },
+    function (err, data) {
+      if (err) return console.error(err);
+      done(null, data);
+    }
+  );
 };
 
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
-  done(null /*, data*/);
+  // .findById() method to find a person by _id with the parameter personId as search key.
+  Person.findById(personId, (err, person) => {
+    if (err) return console.log(err);
+
+    // Array.push() method to add "hamburger" to the list of the person's favoriteFoods
+    person.favoriteFoods.push(foodToAdd);
+
+    // and inside the find callback - save() the updated Person.
+    person.save((err, updatedPerson) => {
+      if (err) return console.log(err);
+      done(null, updatedPerson);
+    });
+  });
 };
 
 const findAndUpdate = (personName, done) => {
