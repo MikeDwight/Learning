@@ -2,12 +2,20 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Url = require("./models/Url");
 const { nanoid } = require("nanoid");
+const path = require("path");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Activer CORS pour toutes les requêtes
+app.use(cors());
+
 // middleware pour parser le JSON dans les requêtes
 app.use(express.json());
+
+// Servir les fichiers statiques du dossier "public"
+app.use(express.static(path.join(__dirname, "public")));
 
 // connexion à mongoDB
 mongoose.connect("mongodb://localhost:27017/urlshortener", {
@@ -42,7 +50,7 @@ app.post("/shorten", async (req, res) => {
   }
 
   // Générer un identifiant unique pour l'URL raccourcie
-  const shortUrl = nanoid(7);
+  const shortUrl = nanoid(4);
 
   // Créer une nouvelle instance du modèle URL
   const newUrl = new Url({ originalUrl, shortUrl });
@@ -55,5 +63,28 @@ app.post("/shorten", async (req, res) => {
     res
       .status(500)
       .json({ error: "🔴 An error occurred while saving the URL" });
+  }
+});
+
+// Route pour rédiriger à partir d'une URl raccourcie
+app.get("/:shortUrl", async (req, res) => {
+  const { shortUrl } = req.params;
+
+  try {
+    // Recherche l'URL originale associé à l'URL raccourcie
+    const url = await Url.findOne({ shortUrl });
+
+    if (url) {
+      // Rediriger vers l'URL originale
+      res.redirect(url.originalUrl);
+    } else {
+      // Si l'URL raccourcie n'existe pas, retourner une erreur 404
+      res.status(404).json({ error: "URL not found" });
+    }
+  } catch (error) {
+    // Gérer les erreurs éventuelles
+    res
+      .status(500)
+      .json({ error: "An error occurred while retrieving the URL" });
   }
 });
