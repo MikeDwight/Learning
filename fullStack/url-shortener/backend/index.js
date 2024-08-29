@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 // Activer CORS pour autoriser ton domaine
 app.use(
   cors({
-    origin: "https://url-shortner-j3bkiz1p7-mikedwights-projects.vercel.app/",
+    origin: "https://mikealvs-shortner-url.vercel.app/",
   })
 );
 
