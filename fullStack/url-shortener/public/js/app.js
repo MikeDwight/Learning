@@ -24,7 +24,7 @@ document
       resultDiv.innerHTML = `
             <p>URL raccourcie :</p>
             <a href="https://url-shortnen.vercel.app/${data.shortUrl}" target="_blank">
-                https://url-shortnen.vercel.app/${data.shortUrl}
+                www.url-shorten/${data.shortUrl}
             </a>
         `;
     } else {
