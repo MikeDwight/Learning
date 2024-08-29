@@ -10,7 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Activer CORS pour autoriser ton domaine
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://url-shortner-lhnh6p2sd-mikedwights-projects.vercel.app/",
+  })
+);
 
 // middleware pour parser le JSON dans les requêtes
 app.use(express.json());
