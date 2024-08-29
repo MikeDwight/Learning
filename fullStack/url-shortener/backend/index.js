@@ -16,7 +16,12 @@ app.use(cors());
 app.use(express.json());
 
 // Servir les fichiers statiques du dossier "public"
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
+
+// Route pour la racine
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public", "index.html"));
+});
 
 // connexion à mongoDB
 mongoose.connect(process.env.MONGODB_URI, {
