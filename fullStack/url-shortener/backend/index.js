@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const Url = require("./models/Url");
@@ -6,7 +7,7 @@ const path = require("path");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // Activer CORS pour toutes les requêtes
 app.use(cors());
@@ -18,7 +19,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // connexion à mongoDB
-mongoose.connect("mongodb://localhost:27017/urlshortener", {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -43,6 +44,7 @@ app.listen(PORT, () => {
 // Route pour créer une URL raccourcie
 app.post("/shorten", async (req, res) => {
   const { originalUrl } = req.body;
+  console.log(originalUrl, "originalUrl");
 
   // Validation de l'URL d'entrée
   if (!originalUrl) {
@@ -58,6 +60,7 @@ app.post("/shorten", async (req, res) => {
   try {
     // Save la nouvelle URL dans la base de donnée
     await newUrl.save();
+    console.log(newUrl, "newUrl");
     res.status(201).json({ originalUrl, shortUrl });
   } catch (error) {
     res
