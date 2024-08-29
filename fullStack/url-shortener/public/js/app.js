@@ -8,16 +8,13 @@ document
       return;
     }
 
-    const response = await fetch(
-      "https://mikealvs-shortner-url.vercel.app/shorten",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ originalUrl }),
-      }
-    );
+    const response = await fetch("https://url-shortnen.vercel.app/shorten", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ originalUrl }),
+    });
 
     const data = await response.json();
 
@@ -26,8 +23,8 @@ document
     if (response.ok) {
       resultDiv.innerHTML = `
             <p>URL raccourcie :</p>
-            <a href="https://mikealvs-shortner-url.vercel.app/${data.shortUrl}" target="_blank">
-                https://mikealvs-shortner-url.vercel.app/${data.shortUrl}
+            <a href="https://url-shortnen.vercel.app/${data.shortUrl}" target="_blank">
+                https://url-shortnen.vercel.app/${data.shortUrl}
             </a>
         `;
     } else {
