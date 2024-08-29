@@ -9,7 +9,7 @@ document
     }
 
     const response = await fetch(
-      "https://url-shortner-lhnh6p2sd-mikedwights-projects.vercel.app/shorten",
+      "https://url-shortner-j3bkiz1p7-mikedwights-projects.vercel.app/shorten",
       {
         method: "POST",
         headers: {
@@ -26,8 +26,8 @@ document
     if (response.ok) {
       resultDiv.innerHTML = `
             <p>URL raccourcie :</p>
-            <a href="https://url-shortner-lhnh6p2sd-mikedwights-projects.vercel.app/${data.shortUrl}" target="_blank">
-                https://url-shortner-lhnh6p2sd-mikedwights-projects.vercel.app/${data.shortUrl}
+            <a href="https://url-shortner-j3bkiz1p7-mikedwights-projects.vercel.app//${data.shortUrl}" target="_blank">
+                https://url-shortner-j3bkiz1p7-mikedwights-projects.vercel.app//${data.shortUrl}
             </a>
         `;
     } else {
