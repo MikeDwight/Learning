@@ -8,13 +8,16 @@ document
       return;
     }
 
-    const response = await fetch("https://mikealvs-shortner-url.vercel.app/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ originalUrl }),
-    });
+    const response = await fetch(
+      "https://mikealvs-shortner-url.vercel.app/shorten",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ originalUrl }),
+      }
+    );
 
     const data = await response.json();
 
